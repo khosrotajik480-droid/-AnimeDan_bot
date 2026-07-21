@@ -218,4 +218,269 @@ def users_count():
 
     conn.close()
 
-    return count
+    return countdef add_anime(
+
+    name
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        INSERT INTO animes(
+
+            name
+
+        )
+
+        VALUES(?)
+
+        """,
+
+        (
+
+            name,
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+
+
+def get_animes():
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT *
+
+        FROM animes
+
+        ORDER BY id ASC
+
+        """
+
+    )
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return data
+
+
+def get_anime(
+
+    anime_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT *
+
+        FROM animes
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            anime_id,
+
+        )
+
+    )
+
+    data = cursor.fetchone()
+
+    conn.close()
+
+    return data
+
+
+def delete_anime(
+
+    anime_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        DELETE FROM animes
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            anime_id,
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+    def add_season(
+
+    anime_id,
+
+    season_number
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        INSERT INTO seasons(
+
+            anime_id,
+
+            season_number
+
+        )
+
+        VALUES(?,?)
+
+        """,
+
+        (
+
+            anime_id,
+
+            season_number
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+
+
+def get_seasons(
+
+    anime_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT *
+
+        FROM seasons
+
+        WHERE anime_id=?
+
+        ORDER BY season_number ASC
+
+        """,
+
+        (
+
+            anime_id,
+
+        )
+
+    )
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return data
+
+
+def get_season(
+
+    season_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT *
+
+        FROM seasons
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            season_id,
+
+        )
+
+    )
+
+    data = cursor.fetchone()
+
+    conn.close()
+
+    return data
+
+
+def delete_season(
+
+    season_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        DELETE FROM seasons
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            season_id,
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
