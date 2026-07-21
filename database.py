@@ -484,3 +484,448 @@ def delete_season(
     conn.commit()
 
     conn.close()
+    def add_episode(
+
+    season_id,
+
+    episode_number,
+
+    file_id,
+
+    caption=None
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        INSERT INTO episodes(
+
+            season_id,
+
+            episode_number,
+
+            file_id,
+
+            caption
+
+        )
+
+        VALUES(?,?,?,?)
+
+        """,
+
+        (
+
+            season_id,
+
+            episode_number,
+
+            file_id,
+
+            caption
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+
+
+def get_episodes(
+
+    season_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT *
+
+        FROM episodes
+
+        WHERE season_id=?
+
+        ORDER BY episode_number ASC
+
+        """,
+
+        (
+
+            season_id,
+
+        )
+
+    )
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return data
+
+
+def get_episode(
+
+    episode_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT *
+
+        FROM episodes
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            episode_id,
+
+        )
+
+    )
+
+    data = cursor.fetchone()
+
+    conn.close()
+
+    return data
+
+
+def get_episode_by_number(
+
+    season_id,
+
+    episode_number
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT *
+
+        FROM episodes
+
+        WHERE season_id=?
+
+        AND episode_number=?
+
+        """,
+
+        (
+
+            season_id,
+
+            episode_number
+
+        )
+
+    )
+
+    data = cursor.fetchone()
+
+    conn.close()
+
+    return data
+    def update_episode(
+
+    episode_id,
+
+    file_id,
+
+    caption
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        UPDATE episodes
+
+        SET
+
+        file_id=?,
+
+        caption=?
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            file_id,
+
+            caption,
+
+            episode_id
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+
+
+def delete_episode(
+
+    episode_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        DELETE FROM episodes
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            episode_id,
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+    def delete_anime_full(
+
+    anime_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT id
+
+        FROM seasons
+
+        WHERE anime_id=?
+
+        """,
+
+        (
+
+            anime_id,
+
+        )
+
+    )
+
+    seasons = cursor.fetchall()
+
+    for season in seasons:
+
+        cursor.execute(
+
+            """
+
+            DELETE FROM episodes
+
+            WHERE season_id=?
+
+            """,
+
+            (
+
+                season["id"],
+
+            )
+
+        )
+
+    cursor.execute(
+
+        """
+
+        DELETE FROM seasons
+
+        WHERE anime_id=?
+
+        """,
+
+        (
+
+            anime_id,
+
+        )
+
+    )
+
+    cursor.execute(
+
+        """
+
+        DELETE FROM animes
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            anime_id,
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+
+
+def delete_season_full(
+
+    season_id
+
+):
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        DELETE FROM episodes
+
+        WHERE season_id=?
+
+        """,
+
+        (
+
+            season_id,
+
+        )
+
+    )
+
+    cursor.execute(
+
+        """
+
+        DELETE FROM seasons
+
+        WHERE id=?
+
+        """,
+
+        (
+
+            season_id,
+
+        )
+
+    )
+
+    conn.commit()
+
+    conn.close()
+
+
+def anime_count():
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT COUNT(*)
+
+        FROM animes
+
+        """
+
+    )
+
+    count = cursor.fetchone()[0]
+
+    conn.close()
+
+    return count
+
+
+def season_count():
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT COUNT(*)
+
+        FROM seasons
+
+        """
+
+    )
+
+    count = cursor.fetchone()[0]
+
+    conn.close()
+
+    return count
+
+
+def episode_count():
+
+    conn, cursor = connect()
+
+    cursor.execute(
+
+        """
+
+        SELECT COUNT(*)
+
+        FROM episodes
+
+        """
+
+    )
+
+    count = cursor.fetchone()[0]
+
+    conn.close()
+
+    return count
