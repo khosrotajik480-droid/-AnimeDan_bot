@@ -1,18 +1,16 @@
 import os
 
-# ==========================
-# تنظیمات ربات
-# ==========================
-
-# توکن ربات (بعداً در Render وارد می‌شود)
+# توکن ربات
 TOKEN = os.getenv("BOT_TOKEN")
 
-# آیدی عددی ادمین
+# آیدی ادمین
 ADMIN_ID = 6284338325
 
-# کانال اصلی (برای عضویت اجباری)
-CHANNEL_USERNAME = "@Anime_G_M"
+# کانال عضویت اجباری
+FORCE_CHANNEL = "@Anime_G_M"
 
-# کانال آرشیو
-# فعلاً بعداً Chat ID آن را قرار می‌دهیم
+# آیدی کانال آرشیو
 STORAGE_CHANNEL = os.getenv("STORAGE_CHANNEL")
+
+# نام دیتابیس
+DATABASE_NAME = "anime_bot.db"
